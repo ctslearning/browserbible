@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title></title>
+
+  <!-- repl. w loca or otr -->
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ctslearning.org/js/jquery.tmpl.min.js"></script>
+  <link rel="stylesheet" href="http://ctslearning.org/css/books.css" />
+
+  <script>
+
+$("document").ready(function() {
+
+  function getQueryVariable(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) == variable) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+    // if none found
+    console.log('shelf %s not found', variable);
+}
+
+var myGoogleBooksSearchShelfNumberBrowseUnq = getQueryVariable('shelf');
+console.log("myGoogleBooksSearchShelfNumberBrowseUnq is " + myGoogleBooksSearchShelfNumberBrowseUnq);
+
+    // set access variables and queries
+    var myuser = "114634984407202084184"; // for bibstudies
+    var myapikey = 'AIzaSyC1xCJVKtFEKbCv4Sq9e4dl0KO1zfvE6UU'; // for ctslearning
+    var gbapiroot = 'https://www.googleapis.com/books/v1/users/' + myuser + '/bookshelves/';
+    var gbapitail = '/volumes?key=' + myapikey;
+
+    var myquery = gbapiroot + myGoogleBooksSearchShelfNumberBrowseUnq + gbapitail;
+    var gbshelfroot = "http://books.google.com/books?uid=";
+    var myshelfurl = gbshelfroot + myuser + "&as_coll=" + myGoogleBooksSearchShelfNumberBrowseUnq; // removed + "&view_type=grid"
+
+    // set markup variables
+    var gbbookroot = "http://books.google.com/books?";
+    var gbbooktail = "&source=gbs_ViewAPI";
+    var gbimgroot = "<img class=gbs_thumb_img border=0 src=http://bks1.books.google.com/books?";
+    var gbimgtail = "&printsec=frontcover&amp;img=1&amp;zoom=5";
+    var gbimgsrc = "<img src=http://books.google.com/intl/en/googlebooks/images/gbs_preview_button1.gif>";
+
+    // set template variables
+    var theid = "${id}";
+    var thetitle = "${volumeInfo.title}";
+    var theauthors = "<span class=authorsis>${volumeInfo.authors}</span>";
+    var thepublisher = "{{if volumeInfo.publisher}}${volumeInfo.publisher}, {{/if}}";
+    var thepubdate = "<span class=pubdateis>${volumeInfo.publishedDate}</span>";
+
+    // create the markup - via api.jquery.com/jquery.tmpl
+    var markup = "{{each items}}" + "<div class=book id=" + theid + ">"
+    // show image
+    + "<a href=" + gbbookroot + "id=${id}&printsec=frontcover>" + gbimgroot + "id=${id}" + gbimgtail + "></a>"
+    // show title
+    + "<p id=title-${id} class=booktitle>" + "<a href=" + gbbookroot + "id=${id}" + ">${volumeInfo.title}{{if volumeInfo.subtitle}}:&nbsp;${volumeInfo.subtitle}{{/if}}</a></p>"
+    // show author and pub info
+    + "<p>" + theauthors + " (" + thepublisher + thepubdate + ")"
+    + " <small><span class=theisbn>${volumeInfo.industryIdentifiers[0].identifier}</span></small>"
+    // show preview button
+    + "<p>{{if accessInfo.viewability=='PARTIAL'||accessInfo.viewability=='ALL_PAGES'}}" + "<a href=" + gbbookroot + "id=${id}&printsec=frontcover>" + gbimgsrc + "</a>{{else}}&nbsp;{{/if}}"
+    // close it out
+    + "</div>{{/each}}";
+        console.log("markup complete");
+
+    // compile the markup as a named template
+    $.template("booklist", markup);
+
+    // get the data, return as JSON
+    $.getJSON(myquery, function(data) {
+        // log the data
+        console.log(data);
+
+        // replace 'Loading' with a div
+        $("#booklist").html('<div id="results"><h3><a class=viewnew href=' + myshelfurl + '>Books</a></h3></div>');
+
+        // put the data in the div
+        $.tmpl("booklist", data).appendTo("#results");
+
+        console.log('reporting fn done ln87');
+
+    }).then(function() {
+
+        // remove month and date from publication date
+        $(".pubdateis").each(function(i){
+            $(this).text($(this).text().slice(0,4));
+        });
+            console.log("pubdate string trimmed");
+
+        // space after comma for multiple authors - via bit.ly/stoflo-11102155
+        $(".authorsis").text(function(i, gbauthors) {
+            return gbauthors.replace(/,/g, ", ");
+        });
+            console.log("authorinfo commas replaced");
+
+        // make all links open in new window
+        // $.getScript("http://ctslearning.org/js/external.js") ;
+
+});
+});
+</script>
+
+<style>
+.theisbn {display:none}
+</style>
+
+</head>
+
+<body>
+<!--
+   <div class="search-input-wrap">
+        <label for="name">Search These Books:</label>
+        <input type="text" name="term" id="term" value="" tabindex="1" />
+        <input type="submit" id="go" value="Go" />
+    </div>
+-->
+
+<div class="main">
+<div id="booklist">
+<i>Loading...</i>
+</div>
+</div>
+
+</body>
+
+</html>

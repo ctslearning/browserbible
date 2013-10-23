@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script> -->
+<script>
+    // set vars
+    var myuser = "114634984407202084184"; // for bibstudies
+    var myapikey = 'AIzaSyC1xCJVKtFEKbCv4Sq9e4dl0KO1zfvE6UU'; // for ctslearning
+    var gbapiroot = 'https://www.googleapis.com/books/v1/users/' + myuser + '/bookshelves/';
+    var gbapitail = '/volumes?key=' + myapikey;
+
+$("#testbook").mouseenter(function () {
+    console.log("mouseentered #testbook");
+
+        $.getJSON('/js/resources/osis2shelf.json', function (shelf) {
+            console.log(shelf);
+
+            var currentBook = History.getState().data.verse.split('.')[0];
+                console.log("currentBook is " + currentBook);
+
+            window.myGoogleBooksSearchShelfNumberUnq = shelf[currentBook];
+                console.log("myGoogleBooksSearchShelfNumberUnq is " + myGoogleBooksSearchShelfNumberUnq);
+
+        }).then(function (getIsbns) {
+                console.log("getIsbns initiated");
+
+                // set browse shelf link
+                $("#browseLink").attr("href","/content/resources/browse/commentaries.html?shelf=" + myGoogleBooksSearchShelfNumberUnq);
+                    console.log("#browseLink now has new href with " + myGoogleBooksSearchShelfNumberUnq);
+
+            var myQuery =  'https://www.googleapis.com/books/v1/users/114634984407202084184/bookshelves/' + window.myGoogleBooksSearchShelfNumberUnq + gbapitail;
+
+            $.getJSON(myQuery, function (data) {
+                    console.log(data);
+
+                var allisbns = [];
+
+                for (var i = 0; i < data.items.length; i++) {
+                    for (var j = 0; j < data.items[i].volumeInfo.industryIdentifiers.length; j++) {
+                        if (data.items[i].volumeInfo.industryIdentifiers[j].type === "ISBN_10") allisbns.push(data.items[i].volumeInfo.industryIdentifiers[j].identifier);
+                    }
+
+                }
+
+                    console.log("allisbns for " + myGoogleBooksSearchShelfNumberUnq + " are " + allisbns);
+
+                window.myGoogleBooksSearchIsbnsJoinedStringUnq = allisbns.join('+OR+isbn:');
+                    console.log("myGoogleBooksSearchIsbnsJoinedStringUnq are " + myGoogleBooksSearchIsbnsJoinedStringUnq);
+
+            }).then(function (readyclick) {
+
+                $('#go').click(function (clickgo) {
+
+                    var myterm = $("#term").val();
+                        console.log('myterm is ' + myterm);
+                    var myurl = "https://www.google.com/search?q=" + myterm + "+isbn:" + window.myGoogleBooksSearchIsbnsJoinedStringUnq + "&btnG=Search+Books&tbm=bks&tbo=1";
+                        console.log('myurl is ' + myurl);
+
+                    window.open(myurl, '_blank'); // considered lightbox
+                        console.log('myurl opened');
+
+               });
+            });
+        });
+});
+</script>
+<style>
+h3 {margin:10px 0}
+a#browseLink {display:block; margin:10px 0}
+
+</style>
+</head>
+<body>
+<div class="resource-inner" id="testbook">
+<div class="commentaries-wrap">
+    <div class="search-wrap">
+    <h3 style="margin-top:5px">Google Books Search</h3>
+    <div class="search-input-wrap">
+        <label for="name">Search Term:</label>
+        <input type="text" name="term" id="term" value="" tabindex="1" />
+        <input type="submit" id="go" value="Go" />
+    </div>
+    <p><a id="browseLink" target="_blank" href="#">Browse</a></p>
+    </div>
+
+<h3>Classic Commentaries</h3>
+<i>from <a href="http://ccel.org">CCEL.org</a></i>
+<ul>
+  <li>Augustine <small>(<a class="lightbox" href="http://www.ccel.org/ccel/schaff/npnf106.ix.ii.html">Synoptic Gospels</a> | <a class="lightbox" href="http://www.ccel.org/ccel/schaff/npnf107.vi.ii.html">John</a> | <a class="lightbox" href="http://www.ccel.org/ccel/schaff/npnf108.iv.ii.html">Psalms</a>)</small></li>
+  <li><a class="lightbox" href="http://www.ccel.org/ccel/calvin/commentaries.i.html">Calvin</a></li>
+  <li>Luther <small>(<a class="lightbox" href="http://www.ccel.org/ccel/luther/galatians.toc.html">Galatians</a> | <a class="lightbox" href="http://www.ccel.org/ccel/luther/sermons.ix.ii.html">other</a>)</small></li>
+  <li><a class="lightbox" href="http://www.ccel.org/ccel/henry/mhc.i.html">Henry</a></li>
+  <li><a class="lightbox" href="http://www.ccel.org/ccel/wesley/sermons.xi.ii.html">Wesley</a></li>
+  <li><a class="lightbox" href="http://www.ccel.org/ccel/spurgeon/sermons01.li.ii.html">Spurgeon</a></li>
+  </ul>
+
+<h3>Library Resources</h3>
+<ul>
+  <li><a class="lightbox" href="http://goo.gl/lYCg7H">E-book commentaries</a> from the Calvin College library (login required)</li>
+  <li><a class="lightbox" href="http://www.ministrymatters.com/library/">New Interpreter's Bible & AOTC/ANTC</a> from MinistryMatters.com (<a class="lightbox" href="http://www.ministrymatters.com/members/signup_landing/">subscription required</a>)</li>
+  <li><a class="lightbox" href="http://www.worldcat.org/">Search libraries</a> from WorldCat.org</li>
+</ul>
+
+
+
+</div><!-- /.commentaries-wrap -->
+</div><!-- /.resource-inner -->
+</body>
+</html>

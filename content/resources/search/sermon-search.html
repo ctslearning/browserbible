@@ -1,0 +1,36 @@
+<div class="resource-inner">
+<div class="sermons-wrap">
+
+   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script type="text/javascript">
+      google.load('search', '1');
+      function onLoad() {
+        google.search.Search.getBranding(document.getElementById('branding'));
+      }
+      google.setOnLoadCallback(onLoad);
+    </script>
+    <style>
+    input.q { margin-bottom:10px !important; padding: 5px !important;} /* using important to override default+en.css */
+    button.submit { margin-bottom:10px !important; padding: 5px !important;}
+    </style>
+
+<h2>Sermons</h2>
+
+<h3>Search</h3>
+    <div id="gsearch-wrap" style="width:auto; margin:auto; margin-top:10px;">
+    <form action="sermon-results.html" method="GET">
+      <input class="q" name="q" size="50"></input>
+      <button class="submit" type="submit">Search</button>
+    </form>
+    <div id="branding"></div>
+    </div>
+
+<h3>Resources</h3>
+<i>from the <a class="lightbox" href="http://cep.calvinseminary.edu/">Center for Excellence in Preaching</a></i>
+<ul>
+<li><a class="lightbox" href="http://cep.calvinseminary.edu/thisWeek/index.php">This Week's sermon starters</a></li>
+<li><a class="lightbox" href="http://cepreaching.org/archive">Audio podcast archive</a></li>
+</ul>
+
+</div><!-- /.sermons-wrap -->
+</div><!-- /.resource-inner -->

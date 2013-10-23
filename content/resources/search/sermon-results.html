@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<!-- Copyright 2010 Google Inc.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License. -->
+
+<html>
+  <head>
+    <title>search results</title>
+
+    <!-- adapted by Nathan Bierma
+            from ajax-apis.appspot.com/html/two_page_search.html by Jeff S at http://bit.ly/gglapimar1 -->
+
+<style>
+      /* styles from google.com/uds/samples/apidocs/tabbed.html    */
+      body {font-family:Arial, sans-serif}
+
+      #search_control_tabbed .gsc-control { width : 95%; }
+      .search-control { margin: 5px; }
+
+      .gs-webResult div.gs-visibleUrl-short {display:none;}
+      .gs-webResult div.gs-visibleUrl-long {display:block !important;}   /* using important to override default+en.css ln 1564 */
+
+    /* custom styles */
+    input.gsc-input { margin-bottom:10px !important; padding: 5px !important;} /* using important to override default+en.css */
+    input.gsc-search-button { margin-bottom:10px !important; padding: 5px !important;}
+
+    .gsc-tabsArea {border-bottom:0px solid #999}
+    .gsc-tabHeader {padding:5px 15px !important; /* using important to override default+en.css */
+        border-top-left-radius: 10px !important; ;
+        border-top-right-radius: 10px !important; ;
+    }
+    .gsc-tabHeader.gsc-tabhInactive {
+        border-left: 1px solid #999 !important; /* using important to override default+en.css */
+        border-right: 1px solid #999 !important; ;
+        border-top:  1px solid #999 !important; ;
+    }
+    .gsc-tabHeader.gsc-tabhInactive:hover {
+        border-left: 1px solid #ccc; /* using important to override default+en.css */
+        border-right: 1px solid #ccc !important; ;
+        border-top:  1px solid #ccc !important; ;
+    }
+    .gsc-tabHeader.gsc-tabhActive {
+        border-left: 1px solid  #444 !important; /* using important to override default+en.css */
+        border-right: 1px solid #444 !important;
+        border-top: 4px solid #90b1d0 !important;
+    }
+    .gsc-resultsRoot { max-width: 800px; }
+    .gs-snippet {font-size:14px; margin:5px 0}
+    .gs-visibleUrl {font-size:14px;}
+
+</style>
+
+   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script type="text/javascript">
+      google.load('search', '1');
+
+      /*  Extracts the users query from the URL.  */
+      function getQuery() {
+        var url = '' + window.location;
+        var queryStart = url.indexOf('?') + 1;
+        if (queryStart > 0) {
+          var parts = url.substr(queryStart).split('&');
+          for (var i = 0; i < parts.length; i++) {
+            if (parts[i][0] == 'q') {
+              return unescape(parts[i].split('=')[1]);
+            }
+          }
+        }
+        return '';
+      }
+
+      function onLoad() {
+
+      // set results to 10 per page
+      var options = new google.search.SearcherOptions();
+      options.setExpandMode(
+        google.search.SearchControl.EXPAND_MODE_OPEN);
+
+      // create a tabbed mode search control
+      var tabbed = new google.search.SearchControl();
+
+      // trying results-per-page again
+      tabbed.setResultSetSize(
+    google.search.Search.FILTERED_CSE_RESULTSET);
+
+      // Begin tab
+      var siteSearch = new google.search.WebSearch();
+      siteSearch.setUserDefinedLabel("CEP Sermon Starters");
+      siteSearch.setUserDefinedClassSuffix("siteSearch");
+      siteSearch.setSiteRestriction("cep.calvinseminary.edu");
+      tabbed.addSearcher(siteSearch);
+      tabbed.setNoResultsString("No results found");
+
+      // Begin tab
+      var siteSearch = new google.search.WebSearch();
+      siteSearch.setUserDefinedLabel("CEP Audio Sermons");
+      siteSearch.setUserDefinedClassSuffix("siteSearch");
+      siteSearch.setSiteRestriction("000852581119925583541:vdkhxgzlgsw"); // was cepreaching.org
+      tabbed.addSearcher(siteSearch);
+      tabbed.setNoResultsString("No results found");
+
+      // Begin tab
+      var siteSearch = new google.search.WebSearch();
+      siteSearch.setUserDefinedLabel("Selected Transcript Sources");
+      siteSearch.setUserDefinedClassSuffix("siteSearch");
+      siteSearch.setSiteRestriction("000852581119925583541:e0qul0qruh0");
+      tabbed.addSearcher(siteSearch);
+      tabbed.setNoResultsString("No results found");
+
+      // Begin tab
+      var siteSearch = new google.search.WebSearch();
+      siteSearch.setUserDefinedLabel("Selected Audio Sources");
+      siteSearch.setUserDefinedClassSuffix("siteSearch");
+      siteSearch.setSiteRestriction("000852581119925583541:-9gwxd67mg4");
+      tabbed.addSearcher(siteSearch);
+      tabbed.setNoResultsString("No results found");
+
+      // Begin tab
+      var siteSearch = new google.search.WebSearch();
+      siteSearch.setUserDefinedLabel("Classic Sermons");
+      siteSearch.setUserDefinedClassSuffix("siteSearch");
+      siteSearch.setSiteRestriction("000852581119925583541:zqfsccdok6e");
+      tabbed.addSearcher(siteSearch);
+
+      // Begin tab
+      var siteSearch = new google.search.WebSearch();
+      siteSearch.setUserDefinedLabel("Sermon Portals");
+      siteSearch.setUserDefinedClassSuffix("siteSearch");
+      siteSearch.setSiteRestriction("000852581119925583541:gxfpsplj0fs");
+      tabbed.addSearcher(siteSearch);
+      tabbed.setNoResultsString("No results found");
+
+      // Begin tab
+      // REMOVED&nbsp;for now
+      //var siteSearch = new google.search.WebSearch();
+      //siteSearch.setUserDefinedLabel("Worship Resources");
+      //siteSearch.setUserDefinedClassSuffix("siteSearch");
+      //siteSearch.setSiteRestriction("000852581119925583541:tn-15zahagc");
+      //tabbed.addSearcher(siteSearch);
+      //tabbed.setNoResultsString("No results found");
+
+      //Begin Web search
+      tabbed.addSearcher(new google.search.WebSearch());
+      tabbed.setNoResultsString("No results found");
+
+        // draw in tabbed layout mode
+        var drawOptions = new google.search.DrawOptions();
+        drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
+        tabbed.draw(document.getElementById("search_control_tabbed"), drawOptions);
+
+        // Run a query - removed alert(getQuery
+        tabbed.execute(getQuery());
+      }
+
+      google.setOnLoadCallback(onLoad);
+
+        // callback will manip tabs; cf. jsbin.com/icitod/2/edit
+
+    </script>
+  </head>
+  <body>
+
+    <!--<input "display:none" id="hidden-input"></input>-->
+
+
+    <div class="search-control" id="search_control_tabbed">results will be displayed here</div>
+
+    <div id="results"><!-- this was the old div --></div>
+
+  </body>
+</html>
