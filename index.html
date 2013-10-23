@@ -1,79 +1,133 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>inScript Bible Browser</title>
-		<style>
-		body {
-			background: #ccc;
-		}
-		#app {
-			width: 300px;
-			height: 220px;
-			padding: 20px;
-			font-family: Helvetica, Arial;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			margin: -120px 0 0 -160px;
-			background: #fff;
-			box-shadow: rgba(0,0,0,0.5) 0 0 10px;
-		}
-		#app h1 {
-			font-size: 16px;
-			text-align: center;
-			margin: 20px 0;
-		}
-		#versions {
-			overflow: hidden;
-			margin: 0 0 0 -20px;
-			padding: 0;
-		}
-		#versions li {
-			margin: 0;
-			padding: 0;
-			float: left;
-			list-style-type: none;
-		}
-		#versions a {
-			display: block;
-			float: left;
-			margin: 0 0 0 20px;
-			background: #ddd;
-			border: solid 1px #333;
-			width: 138px;
-
-			text-align: center;
-			padding: 30px 0;
-			text-decoration: none;
-			color: #333;
-		}
-		#versions a:hover {
-			background: #ccc;
-
-		}
-		#app p {
-			margin: 30px 0 0 0;
-			font-size: 12px;
-			text-align: center;
-			
-		}
-		#app p a{
-			color: #888;
-		}
-		</style>
-	</head>
-	<body>
-		
-		<div id="app">
-			<h1>inScript Bible Browser</h1>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Scripture Study App - from Calvin Theological Seminary</title>
+	<!-- Apple specific code -->
+	<meta name="viewport" content="width=device-width, user-scalable = no, initial-scale=1" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link href="css/images/favicon.png" rel="icon" />
+	<!-- replacement console for IE -->
+	<script>
+	if (typeof console == 'undefined') { window.console = {log:function() {}}; }
+	</script>
+	<script src="lib/jquery.min.js"></script>
+	<script src="lib/jquery_ui/jquery-ui.min.js"></script>
+	<script src="lib/underscore.min.js"></script>
+	<script src="lib/jquery.cookie.min.js"></script>
+	<script src="lib/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
+	<!-- external libraries -->
+  <link rel="stylesheet" href="lib/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+  <script type="text/javascript" src="lib/fancybox/jquery.fancybox.pack.js"></script>
+	<script src="lib/jquery.json.js"></script>
+	<script src="lib/jstorage.js"></script>
+	<script src="lib/xregexp.js"></script>
+	<script src="lib/mediaelementjs/mediaelement-and-player.js"></script>
+	<link rel="stylesheet" href="lib/mediaelementjs/mediaelementplayer.css" />	
+	<!-- Bible related data -->
+	<script src="js/bible/bible.data.js"></script>
+	<script src="js/bible/bible.reference.js"></script>
+	<script src="js/bible/bible.formatter.js"></script>
+	<script src="js/bible/bible.search.js"></script>
+	<script src="js/bible/bible.versions.js"></script> <!-- update to add/change versions -->
+	<script src="js/bible/bible.morphology.js"></script>
+	<!-- Documents and windows -->
+	<script src="js/docs/docs.namespace.js"></script>
+	<script src="js/docs/docs.detection.js"></script>
+	<script src="js/docs/docs.manager.js"></script>
+	<script src="js/docs/docs.modal.js"></script>
+	<script src="js/docs/docs.localizer.js"></script>
+	<script src="js/docs/navigators.bible.js"></script>
+	<!-- main nav -->
+	<script src="js/docs/plugins.config.js"></script>
+	<script src="js/docs/plugins.config.viewer.js"></script>		
+	<script src="js/docs/plugins.config.theme.js"></script>	
+	<script src="js/docs/plugins.config.type.js"></script>		
+	<script src="js/docs/plugins.config.options.js"></script>			
+	<script src="js/docs/plugins.about.js"></script>	
+	<!-- <script src="js/docs/plugins.adddocument.js"></script> -->
+	<script src="js/docs/plugins.fullscreen.js"></script>	
+	<!-- plugins -->
+	<script src="js/docs/plugins.matchverses.js"></script>
+	<script src="js/docs/plugins.matchwords.js"></script>
+	<script src="js/docs/plugins.lemmapopup.js"></script>
+	<script src="js/docs/plugins.notes.js"></script>
+	<script src="js/docs/plugins.imagelibrary.js"></script>
+	<script src="js/docs/plugins.maplibrary.js"></script>
+	<script src="js/docs/plugins.videolibrary.js"></script>
+	<script src="js/docs/plugins.versepopup.js"></script>
+	<script src="js/docs/plugins.morphology.js"></script>
+	<script src="js/docs/plugins.hebrewpointing.js"></script>
+	<script src="js/docs/plugins.eng2p.js"></script>
 	
-			<ul id="versions">		
-				<li><a href="app/reader.html">Reader</a></li>
-				<li><a href="app/index.html">Desktop</a></li>
-			</ul>
-	
-			<p>Built by the <a href="http://dbsbible.org">Digital Bible Society</a>, available at <a href="http://github.com/digitalbiblesociety">github</a>
-		</div>
-	</body>
+	<script src="js/docs/plugins.config.system.js"></script>					
+
+	<!-- main launcher -->
+	<script src="js/desktop.app.js"></script>
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" href="css/IE7.css" media="screen, projection">
+	<![endif]-->
+	<link rel="stylesheet" href="css/desktop.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/bible.css" />
+
+	<link rel="stylesheet" href="css/jquery-ui.min.css" />
+
+  <!-- Custom -->
+	<script src="custom/js/app.js"></script>
+	<script src="custom/js/plugins.header.js"></script>
+	<script src="custom/js/plugins.footer.js"></script>
+	<script src="custom/js/navigators.resource.js"></script>
+	<script src="custom/js/plugins.resource.js"></script>
+	<script src="custom/js/plugins.resource.load.js"></script>
+	<script src="custom/js/plugins.lightbox.js"></script>
+	<script src="custom/js/plugins.resource.loadresource.js"></script>
+	<script src="custom/js/plugins.resource.syncverse.js"></script>
+	<script src="custom/js/plugins.resource.utility.js"></script>
+	<script src="custom/js/plugins.glossary.js"></script>
+	<script src="custom/js/plugins.context.js"></script>
+	<script src="custom/js/plugins.strongLink.js"></script>
+	<script src="custom/js/plugins.popup.js"></script>
+	<script src="custom/js/plugins.lemmabuttons.js"></script>
+	<link rel="stylesheet" href="lib/jquery_ui/themes/base/jquery-ui.min.css" />
+	<link rel="stylesheet" href="custom/css/app.css" />
+
+  <!-- resource panels - from NB -->
+	<link rel="stylesheet" href="css/custom/resources.css" />
+
+  <!-- load Google JS API - from NB -->
+     <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+
+
+</head>
+<body>
+    <!-- temporary beta notice -->
+    <div id="beta-notice">This is a beta version. <a class="lightbox" href="/content/contact.html">What do you think?</a></div>
+<div id="header" class="site-header">
+  <div id="header-inner"></div>
+    <!-- <img id="top-logo" src="css/images/top-logo.png" /> -->
+    <!-- <a class="mobile-toggle" href="reader.html"></a> -->
+  <div id="header-nav"></div>
+</div>
+<div id="content"></div>
+<div id="footer"></div>
+</body>
+<!-- IE warning -->
+<script>
+  $(document).ready(function () {
+      if (navigator.userAgent.match(/msie/i)) {
+          alert('This app is not supported in Internet Explorer. Please use Firefox or Chrome.');
+      }
+  });
+</script>
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-43420625-1', 'calvinseminary.edu');
+  ga('send', 'pageview');
+</script>
 </html>

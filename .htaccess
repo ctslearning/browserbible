@@ -1,0 +1,15 @@
+DirectoryIndex index.html
+Allow from all
+Satisfy Any
+
+AddType image/svg+xml svg
+AddType image/svg+xml .svg
+
+AddType application/json json
+AddType application/json .json
+
+
+AddType text/html htm
+AddType text/html .htm
+AddType text/html html
+AddType text/html .html

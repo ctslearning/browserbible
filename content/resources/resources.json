@@ -1,0 +1,47 @@
+{
+  "en_neti" : {
+    "title" : "English (NET)",
+    "type" : "bible",
+    "group" : "bibles",
+    "menu" : true
+  },
+  "en_kjv" : {
+    "title" : "English (KJV)",
+    "type" : "bible",
+    "group" : "bibles",
+    "menu" : true
+  },
+  "grammar" : {
+    "title" : "Grammar",
+    "type" : "html",
+    "group" : "resources",
+    "filename" : "glossary.html",
+    "expand" : true,
+    "menu" : true
+  },
+  "context" : {
+    "title" : "Context",
+    "type" : "context",
+    "group" : "resources",
+    "filename" : "context.html",
+    "expand" : true,
+    "menu" : true
+  },
+  "glossary" : {
+    "title" : "Glossary",
+    "type" : "glossary",
+    "group" : "resources",
+    "filename" : "glossary.html",
+    "menu" : false
+  },
+  "dredit" : {
+    "title" : "Notes",
+    "type" : "iframe",
+    "group" : "resources",
+    "url" : "",
+    "expand" : true,
+    "expandWarning" : "Opening Notes in another window will loose any unsaved work. Do you wish to continue?",
+    "menu" : true
+  }
+}
+

@@ -1,0 +1,68 @@
+/* for resources panels - /content/resources */
+
+/* === General === */
+/* -- current wrapper is .resource-inner - need something like .resource */
+.resource-inner {
+        font-size:14px; /* set smaller font-size, override config panel w/ !important ?, need to compare with config'd value */
+        line-height:1.6 ;
+}
+
+.resource-inner a {color:#700000} /* was #444 */
+
+.resource-inner h2 {margin-top:10px 0}
+.resource-inner h3 {margin-top:10px 0}
+.resource-inner h4 {margin-top:10px 0}
+.resource-inner ul li {list-style-type: disc;}
+
+/* === for Grammar === */
+.resource-inner .grammar-wrap h2 {margin-top:20px 0 10px 0}
+.resource-inner .grammar-wrap .entry {font-size:14px}
+.resource-inner .grammar-wrap .entry {border-top:1px solid #ccc; margin:10px 0 0 0; padding:5px 0}
+
+.resource-inner .grammar-wrap .definition {margin:10px 0}
+.resource-inner .grammar-wrap .definition a {color:black}
+.resource-inner .grammar-wrap .definition a:hover {background:#eee}
+
+.resource-inner .grammar-wrap .example {
+            border-left: 10px solid #ddd;                    /* tried background:#eee */
+            margin: 10px 0 0 0; padding: 0px 20px;
+}
+.resource-inner .grammar-wrap .original {font-family:Gentium; font-size:18px}
+.resource-inner .grammar-wrap .original {} /* was background:#eee */
+.resource-inner .grammar-wrap .translation {margin-top:10px;} /* was background:#eee; border-top:1px solid #ccc */
+.resource-inner .grammar-wrap .translation a {color:black}
+
+.resource-inner .grammar-wrap ul.related li a {color:#444}
+
+
+/* === for Context === */
+.resource-inner .context-wrap .book-wrap {border-top:0px; margin:10px 0 0 0; padding:5px 0} /* was border-top:0px dotted #444 */
+.resource-inner .context-wrap .book-wrap h3 {margin:10px 0; padding:2px 5px; background:#333; color:white}
+.resource-inner .context-wrap .book-wrap h4 {margin:10px 0 5px 0; background:#ddd; padding:2px 5px}
+.resource-inner .context-wrap .book-wrap h4.Subhead {
+            background:transparent; margin:0 0 5px 0; padding:0;
+            font-weight:normal; font-style:italic; font-size:16px
+            }
+.resource-inner .context-wrap .book-wrap p {margin:10px 0}
+.resource-inner .context-wrap .book-wrap cite {margin:10px 0; display:block; font-size:small; border-top:1px solid #ccc; padding-top:5px}
+.resource-inner .context-wrap .book-wrap cite a {color:#444}
+
+
+/* for about pages */
+
+/* -- current wrapper is .content-inner - need something like .page */
+.content-inner {
+        font-size:14px; /* set smaller font-size, override config panel w/ !important ?, need to compare with config'd value */
+        line-height:1.6 ;
+        font-family: Arial, sans-serif;
+        padding:10px;
+}
+
+.content-inner a {color:#700000} /* was #444 */
+
+.content-inner p {margin:20px 0;}
+
+.content-inner h2 {margin-top:10px 0}
+.content-inner h3 {margin-top:20px 0} /* tried 10px 0 */
+.content-inner h4 {margin-top:10px 0}
+.content-inner ul li {list-style-type: disc;}
