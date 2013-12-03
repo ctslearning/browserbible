@@ -40,6 +40,7 @@ docs.plugins.morphology = {
 				$('<input type="button" value="Add Row" />')
 					.appendTo(this.morphWindow.content)
 					.on('click', function() {
+            docs.plugins.morphology.morphWindow.rows.children('div').removeClass('selected');
 						var row = docs.plugins.morphology.createRow();
 						docs.plugins.morphology.morphWindow.rows.append(row);
 					});
@@ -119,7 +120,7 @@ docs.plugins.morphology = {
 							},					
 							{
 								letter : 'G',
-								type : 'Genative'
+								type : 'Genitive'
 							},					
 							{
 								letter : 'V',
@@ -153,7 +154,7 @@ docs.plugins.morphology = {
 							},
 							{
 								letter : 'N',
-								type : 'Nueter'
+								type : 'Neuter'
 							}
 						]
 					}			
@@ -701,7 +702,7 @@ docs.plugins.morphology = {
 		}
 	},
 		
-	createRow: function() {
+	createRow: function(selector) {
 	
 		// create styles
 		var cssStyles = [],
@@ -709,7 +710,8 @@ docs.plugins.morphology = {
 			colorNames = ['Red','Green','Blue','Yellow','Magenta','Cyan'],
 			styles = ['color:{0}','background:{0}','border-bottom: solid 2px {0}','border-bottom: dotted 2px {0}'],
 			styleNames = ['Text Color','Background','Solid Underline','Dotted Underline'];
-			
+		
+    selector = (typeof selector == 'undefined') ? '' : selector;
 			
 		for (var i=0, il=styles.length; i<il; i++) {
 			for (var j=0, jl=colors.length; j<jl; j++) {
@@ -723,7 +725,7 @@ docs.plugins.morphology = {
 	
 	
 		return $(
-			'<div class="morph-row">' +
+			'<div class="morph-row" data-selector="' + selector + '">' +
 				'<div class="morph-type">' +
 					'<select>' +
 						'<option value="strongs">Strongs</option>' + 
@@ -732,7 +734,7 @@ docs.plugins.morphology = {
 					'</select>' +							
 				'</div>' + 
 				'<div class="morph-data">' +
-					'<input type="text" placeholder="Strong\'s (e.g. G2424, H234)" />' +
+					'<input type="text" placeholder="Strong\'s (e.g. G2424, H234)" value="' + selector + '"/>' +
 				'</div>' +
 				'<div class="morph-style">' +
 					'<select>' +

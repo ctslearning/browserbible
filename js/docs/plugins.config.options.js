@@ -68,7 +68,7 @@ display: none;\
 .verse {\
 display: block;\
 }\
-body.config-blockverse-off .verse {\
+body.config-blockverse-off .document-container.bible .verse {\
 display: inline;\
 }');
 		docManager.createOptionToggle('Verses on New Line', 'blockverse', false);

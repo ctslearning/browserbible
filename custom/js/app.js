@@ -1,4 +1,4 @@
-// Universal functions and variables, unique to the modified app
+// Universal functions and variables, unique to modified app
 
 //Makes Underscore templates use mustach syntax.
 _.templateSettings = {
@@ -13,11 +13,18 @@ var FancyBoxDefaults = {
   height: '80%'
 };
 
-var appTitle = 'CTS Bible Browser';
+
+var app = {
+  title: 'CTS Bible Browser',
+  en_default: 'en_neti',
+  gr_default: 'gr_sblgnt',
+  he_default: 'he_wlc'
+};
 
 var historyTitle = function (verse) {
-  return verse + ' - ' + appTitle;
+  return verse + ' - ' + app.title;
 };
+
 
 //Throttles history state pushes during scrolls.
 var throttleHistory = _.throttle(function (verse) {
@@ -31,9 +38,9 @@ var OAuthClass = function () {
   var VALIDURL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
   var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
 
-
+  //Local
   var CLIENTID = '';
-  var REDIRECT = '';
+  var REDIRECT = 'https://internal.calvinseminary.edu/app/oauth2callback';
 
   
   var LOGOUT = 'http://accounts.google.com/Logout';

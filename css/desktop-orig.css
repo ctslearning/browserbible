@@ -230,7 +230,7 @@ li  {list-style:none}
 .document-focused                           {-x-border:solid 1px #333;}
 
 .chapter                                    {margin:5px 0;}
-.verse-highlight                            {background:Gainsboro;-webkit-transition:all 1s ease-in-out;}
+.verse-highlight                            {background:Gainsboro;-webkit-transition:all 0.51s ease-in-out;}
 .word-highlight                             {background:Gold;}
 
 .search-text                                {width:200px; font-size: 16px;}

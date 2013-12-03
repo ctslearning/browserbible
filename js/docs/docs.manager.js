@@ -318,6 +318,12 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	t.input = t.container.find('.document-input');
 	t.button = t.container.find('.document-button');
 	t.selector = t.container.find('.document-selector').val(selectedDocumentId);
+  
+  // t.selector.selectBoxIt({
+  //   // autoWidth: false,
+  //   theme: "jqueryui"
+  // });
+  
 
 
 	// double check. if the selected version (from memory) isn't there, try the first one
@@ -472,9 +478,8 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 		//t.navigationWindow.hide();
 	});
 	t.searchBtn.on('click', function(e) {
-		//console.log('search cicked');
-		
-		docs.Search.searchVersion.val( t.selector.val() );
+    console.log('search clicked');
+		docs.Search.searchVersion.data("selectBox-selectBoxIt").selectOption( t.selector.val() );
 		docs.Search.searchWindow.show();
 		docs.Search.searchInput.focus();
 	});
@@ -498,16 +503,13 @@ docs.Document = function(manager, id, navigator, selectedDocumentId) {
 	
 	// buttons
   t.settingsBtn.on('click', function (e) {
-    t.buttonsContainer.animate({
-      left: parseInt(t.buttonsContainer.css('left'), 10) > 0 ?
-        0 : 
-        t.header.outerWidth()
-    }, 'fast');
+    t.buttonsContainer.toggleClass('open');
+    docs.DocManager.onResize();
   });
   
-  t.buttonsContainer.find('input.document-settings-close-button').on('click', function (e) {
-    t.settingsBtn.click();
-  });
+  // t.buttonsContainer.find('input.document-settings-close-button').on('click', function (e) {
+  //   t.settingsBtn.click();
+  // });
   
 	t.infoBtn.on('click', function(e) {
 		// load about page

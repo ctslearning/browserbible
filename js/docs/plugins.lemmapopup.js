@@ -49,7 +49,7 @@ docs.plugins.lemmapopup = {
 				var strongSearch = $(this),
 					strongKey = strongSearch.attr('data-strong');
 					
-				docs.Search.searchVersion.val( selectedWordVersion ); // selectedWord.closest('.document-container').find('.document-header select').val() );
+				docs.Search.searchVersion.data("selectBox-selectBoxIt").selectOption( selectedWordVersion );
 				docs.Search.searchInput.val( strongKey );
 				docs.Search.searchWindow.show();
 				docs.Search.doSearch();

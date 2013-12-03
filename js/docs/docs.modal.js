@@ -53,11 +53,13 @@ docs.createModal = function(id, startTitle) {
 		content: content,
 		footer: footer,
 		close: close,
+    showCallback: function () {},
 		hide: function() {
 			popup.hide();
 			return this;
 		},
 		show: function() {
+      this.showCallback();
 			// hide all others
 			$('.popup-window').hide();
 			

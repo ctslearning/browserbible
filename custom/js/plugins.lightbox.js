@@ -40,8 +40,11 @@ jQuery(document).ready(function($) {
 });
 
 function lightBox(url) {
-  
-  var $content = $(_template('iframe_header', {url: url}));
+  var template_name = 'iframe_header';
+  if (url.search(window.location.host) > -1 || url[0] == '/') {
+    template_name = 'iframe_header_internal';
+  }
+  var $content = $(_template(template_name, {url: url}));
   
   //Closes lightbox when "open in new window" link is clicked
   $content.find('a#iframe-new-window').on('click', function () {

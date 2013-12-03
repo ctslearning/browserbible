@@ -112,7 +112,7 @@ resourcesClass = function (docManager, plugin) {
   };
   
   this.newDocument = function (resource, resourceID, resourceContent, destination) {
-		var document = new docs.ResourceDocument(t.docManager, t.docManager.docIndex.toString(), bible.ResourceNavigator, 'en_neti', resource, resourceID, resourceContent);
+		var document = new docs.ResourceDocument(t.docManager, t.docManager.docIndex.toString(), bible.ResourceNavigator, app.en_default, resource, resourceID, resourceContent);
 
 		t.docManager.documents.push(document);
 		t.docManager.content.append(document.container);

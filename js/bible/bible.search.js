@@ -173,6 +173,7 @@ bible.BibleSearch = {
 		s.searchText = text;
 		
 		s.version = version;
+    s.versionInfo = bible.versions.getVersion(version);
 		s.chapterCallback = chapterCallback;
 		s.foundCallback = foundCallback;
 		s.endedCallback = endedCallback;
@@ -183,6 +184,9 @@ bible.BibleSearch = {
 		s.resultCount = 0;
 		s.startTime = new Date();
 		s.searchResultsArray = [];
+    
+    s.searchResultsBooks = {};
+    
 		s.indexedChapters = [];
 		s.indexedChaptersIndex = -1;
 		s.bookOsisID = s.bookRange[0];
@@ -204,9 +208,24 @@ bible.BibleSearch = {
 			}
 
 		} else {
-			// search the whole bible
-			s.bookRange = bible.DEFAULT_BIBLE;
+      //Only search in Book range available to this language.
+      if (s.versionInfo.language == 'gr') {
+				s.bookRange = bible.NT_BOOKS;
+      }
+      else if (s.versionInfo.language == 'he') {
+				s.bookRange = bible.OT_BOOKS;
+      }
+      else {
+  			s.bookRange = bible.DEFAULT_BIBLE;
+      }
 		}
+    
+    // Prefill book result zeros 
+    for (var i=0;i<s.bookRange.length;i++) {
+      var book = s.bookRange[i];
+      s.searchResultsBooks[book] = 0;
+    }
+    
 		
 		
 		// all ASCII
@@ -270,7 +289,7 @@ bible.BibleSearch = {
 		s.searchTermsIndex = -1;
 		
 		// create an index of just the chapters (John.1) instead of all the verses (John.1.1 and John.1.7)
-		s.indexedChapters = []
+		s.indexedChapters = [];
 		s.osisBookMatches = {};
 		
 		s.indexGroups = [];		
@@ -463,6 +482,11 @@ bible.BibleSearch = {
 	},
 	
 	loadChapter: function() {
+    
+    //Mark a zero for this book result.
+    // if (typeof s.searchResultsBooks[match.reference.osisBookID] == 'undefined') {
+    //   s.searchResultsBooks[s.bookOsisID] = 0;
+    // }
 		
 		var s = this,
 			chapterUrl = s.baseBiblePath + s.version + '/' + (s.bookOsisID + '.' + (s.chapterIndex+1)) + '.html';
@@ -551,7 +575,8 @@ bible.BibleSearch = {
 					if (s.isLemmaSearch) {
 						verseSpan = verseSpan.replace(s.searchRegExp[j], function(str, p1, p2, offset, s) {
 							foundMatches[j] = true;
-							return ' ' + str + ' highlight ';
+              return ' ' + str + ' highlight ';
+              // return str;
 						});		
 						
 					} else {
@@ -578,13 +603,18 @@ bible.BibleSearch = {
 						verseReferenceText = new bible.Reference( verseOsis[0] ); //.toString();
 						//console.log(verse);
 						
-						// put it altogether for a row
-						html = '<div class="search-result"><span class="search-verse">' + verseReferenceText + '</span>' + verseSpan + '</div>';
+            
+            //We are assembling HTML sippet in found callback now.
+            // html = '<div class="search-result"><span class="search-verse">' + verseReferenceText + '</span>' + verseSpan + '</div>';
 						
 						// store results
-            s.found(html);
+            // s.found(html);
+            s.found({
+              reference: verseReferenceText,
+              verse: verseSpan
+            });
 					} 
-				}				
+				}
 				
 			}
 		}
@@ -644,11 +674,18 @@ bible.BibleSearch = {
 		
 	},
   
-  found: function () {
+  found: function (match) {
     var s = this;
-		s.searchResultsArray.push(html);  
+		s.searchResultsArray.push(match);
+    
+    //Create this book result entry at time of first result found in it.
+    if (typeof s.searchResultsBooks[match.reference.osisBookID] == 'undefined') {
+      s.searchResultsBooks[match.reference.osisBookID] = 0;
+    }
+    
+    s.searchResultsBooks[match.reference.osisBookID]++; 
 		s.resultCount++;  
-    s.foundCallback(html);
+    s.foundCallback(match);
   },
 	
 	ended: function() {		
@@ -656,7 +693,7 @@ bible.BibleSearch = {
 		
 		this.endedCallback(this.resultCount, this.startTime);
 		
-		this.searchResultsArray = null;
+    // this.searchResultsArray = null;
 		
 		//results.html( this.searchResultsArray.join('') );	
 	}

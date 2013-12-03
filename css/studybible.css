@@ -89,7 +89,7 @@ body                                        {overflow: hidden;}
 .document-focused                           {-x-border:solid 1px #333;}
 
 .chapter                                    {margin:5px 0;}
-.verse-highlight                            {background:Gainsboro;-webkit-transition: all 1s ease-in-out;}
+.verse-highlight                            {background:Gainsboro;-webkit-transition: all 0.5s ease-in-out;}
 .word-highlight                             {background:Gold;}
 
 .modal-window                               {position:absolute;width:600px;height:400px;top:50%;left:50%;margin-left:-300px;margin-top:-200px;background:#fff;border:solid 1px #999;}

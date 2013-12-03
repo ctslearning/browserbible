@@ -18,7 +18,9 @@
 .popup-window .popup-content                {background:#fff;min-height:60px;line-height:1.4;margin:7px;padding:8px; overflow: auto; -webkit-overflow-scrolling: touch;}
 .popup-window .popup-close                  {position:absolute;right:8px;top:8px;cursor:pointer;text-indent:-999px;background-image:url(images/close.svg);width:20px;height:20px;}
 .popup-window .popup-footer                 {color:#fff;padding:0 8px 8px;}
-.popup-window .popup-menu                   {padding:0 8px;}
+.popup-window .popup-menu                   {
+  padding: 8px 8px 0;
+}
 .popup-window .popup-content p              {margin:10px 0;}
 .popup-window .popup-content code           {font-family:monospace;background:#111;color:#eee;display:block;margin:10px 0;padding:5px;}
 
@@ -76,3 +78,70 @@
 .outline ol li ol li                        {list-style-type:lower-alpha;}
 .outline ol li ol li ol li                  {list-style-type:lower-roman;}
 .outline ol li ol li ol li ol li            {list-style-type:decimal;}
+
+#show-book-results {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  text-decoration: underline;
+}
+
+#show-book-results[disabled='disabled'] {
+  cursor: default;
+  text-decoration: none;  
+}
+
+/*#search .popup-content,*/
+#book-results {
+  -webkit-transition:width 0.5s;
+     -moz-transition:width 0.5s;
+       -o-transition:width 0.5s;
+          transition:width 0.5s;
+}
+
+#book-results {
+  background: white;
+  float: right;
+  margin: 7px;
+  padding: 7px;
+  
+  width: 0;
+/*  height: 200px;*/
+}
+
+#book-results.show {
+  width: 100px;
+}
+
+#book-results .book {
+  float: left;
+  font-weight: bold;
+}
+
+#book-results .value {
+  float: right;
+}
+
+#book-results,
+#search .popup-content {
+  overflow: auto;
+}
+
+.book-result-row {
+  padding: 5px;
+}
+
+.book-result-row.has-results:hover {
+  background: #FFF6C9;
+  cursor: pointer;
+}
+
+.book-result-row.selected,
+.book-result-row.selected.has-results:hover {
+    background: #FFC237;
+}

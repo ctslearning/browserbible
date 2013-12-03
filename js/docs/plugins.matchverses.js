@@ -26,29 +26,34 @@ docs.plugins.matchverses = {
 				$('.' + verseClass).removeClass(verseClass);
 			}
 		
-		if (!docs.Features.hasTouch) {
+		if (docs.Features.hasTouch) {
+      docManager.content.on('doubletap', 'span.verse', function() {
+        hoverVerse($(this));
+        e.stopPropagation();
+      });
+		} else {
 		
 			docManager.content.on('mouseover', 'span.verse', function() {
-				
-				removeHighlights();
-				clearTimer();
-				
-				var verse = $(this),
-					verseId = verse.attr('data-osis');
-					
-				$('.' + verseClass).removeClass( verseClass );
-				
-				//$('span.verse[data-osis="' + verseId + '"]').addClass(verseClass);
-				
-				$('span.' + verseId.replace(/\./gi,'_') ).addClass(verseClass);
-				
-				
-				
-			}).on('mouseout', 'span.verse', function() {
-				
+        hoverVerse($(this));
+			}).on('mouseout', 'span.verse', function() {				
 				startTimer();
-				
 			});
 		}
+        
+
+    
+    
+    function hoverVerse(verse) {
+			removeHighlights();
+			clearTimer();
+			
+			var verseId = verse.attr('data-osis');
+				
+			$('.' + verseClass).removeClass( verseClass );
+			
+			//$('span.verse[data-osis="' + verseId + '"]').addClass(verseClass);
+			
+			$('span.' + verseId.replace(/\./gi,'_') ).addClass(verseClass);
+    }
 	}
 };

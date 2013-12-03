@@ -120,6 +120,43 @@ hr {
 }
 
 .find-links {
+  clear: both;
   margin-top: 1em;
   display: none;
+}
+
+.morph-row.selected {
+  background: gold;
+} 
+#search .selectboxit-container {
+  vertical-align: bottom;
+}
+#search .selectboxit-container .selectboxit,
+#search .ui-button {
+  margin: 3px 2px;
+}
+
+.verse.interlinear_verse {
+  background: #DDD;
+  border: 1px solid gray;  
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.clearfix {
+    *zoom: 1;
 }
