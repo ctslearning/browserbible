@@ -1,10 +1,3 @@
-/**
- * All the functions necessary to navigate a Bible
- * @requires bible.BibleFormatter
- *
- * @author John Dyer (http://j.hn/)
- */
-
 bible.ResourceNavigator = {
 	
 	name: 'resource',
