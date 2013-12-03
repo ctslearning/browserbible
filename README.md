@@ -6,6 +6,8 @@ This is a significant departure from digitalbiblesociety/browserbible, built for
 * Parallel/Interlinear panel that provides instant links to BibleHub, BibleGateway, and Blue Letter Bible.
 * Shortcut to search strongs numbers on BibleHub.com.
 * Live search results.
+* Search stats include hits by book.
+* Interlinear search results.
 * Bookmarking via current verse storage in HTML 5 history.
 * Content panel breakout into new window.
 * Tons of code refactoring, including using Undescore.js templating.
